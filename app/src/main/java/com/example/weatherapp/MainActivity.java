@@ -122,9 +122,6 @@ public class MainActivity extends AppCompatActivity {
                 if(status == TextToSpeech.SUCCESS){
                     speak.setEnabled(true);
                 }
-                else{
-                    Log.d("Fail","Initialization Failed");
-                }
             }
         });
         speak.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
                     InputStream inputStream = urlConnection.getInputStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                     String data = bufferedReader.readLine();
-                    Log.d("data",data);
                     stringData = new JSONObject(data);
 
                 }
@@ -202,7 +198,6 @@ public class MainActivity extends AppCompatActivity {
                 String city1 = stringData.getJSONArray("list").getJSONObject(1).get("name").toString();
                 String city2 = stringData.getJSONArray("list").getJSONObject(2).get("name").toString();
 
-                Log.d("city1",city1);
                 String weather0 = stringData.getJSONArray("list").getJSONObject(0).getJSONObject("main").getString("temp").toString();
                 String weather1 = stringData.getJSONArray("list").getJSONObject(1).getJSONObject("main").getString("temp").toString();
                 String weather2 = stringData.getJSONArray("list").getJSONObject(2).getJSONObject("main").getString("temp").toString();
@@ -248,21 +243,26 @@ public class MainActivity extends AppCompatActivity {
                 SimpleDateFormat timeCityZero = new SimpleDateFormat("hh:mm a");
                 timeCityZero.setTimeZone(TimeZone.getTimeZone("America/New_York"));
                 String timeFinalCityZero = timeCityZero.format(timeZero);
-                timeCity0TV.setText(timeFinalCityZero + " EST");
+                if(timeFinalCityZero.charAt(0)=='0'){
+                    timeCity0TV.setText(timeFinalCityZero.substring(1) +" EST");
 
+                }
                 Date timeOne = new Date(epochZero*1000L);
                 SimpleDateFormat timeCityOne = new SimpleDateFormat("hh:mm a");
                 timeCityOne.setTimeZone(TimeZone.getTimeZone("America/New_York"));
                 String timeFinalCityOne = timeCityOne.format(timeOne);
-                timeCity1TV.setText(timeFinalCityOne + " EST");
+                if(timeFinalCityOne.charAt(0)=='0'){
+                    timeCity1TV.setText(timeFinalCityOne.substring(1) +" EST");
 
+                }
                 Date timeTwo = new Date(epochZero*1000L);
                 SimpleDateFormat timeCityTwo = new SimpleDateFormat("hh:mm a");
                 timeCityTwo.setTimeZone(TimeZone.getTimeZone("America/New_York"));
                 String timeFinalCityTwo = timeCityTwo.format(timeTwo);
-                timeCity2TV.setText(timeFinalCityTwo +" EST");
+                if(timeFinalCityTwo.charAt(0)=='0'){
+                    timeCity2TV.setText(timeFinalCityTwo.substring(1) +" EST");
 
-
+                }
                 //Clear
                 if(weatherDescriptionCity0.contains("Clear")){
                     if(timeCity0TV.getText().toString().contains("PM")){
